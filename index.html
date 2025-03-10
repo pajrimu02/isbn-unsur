@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>ISBN-13 Checker</title>
+  </head>
+  <body>
+    <center>
+      <img src="img/LOGO.png" width="230" height="120" />
+    </center>
+    <h2>ISBN-13 Checker</h2>
+    <input
+      type="text"
+      id="isbn"
+      placeholder="Masukkan ISBN-13"
+      maxlength="13"
+    />
+    <button onclick="checkISBN()">Cek ISBN</button>
+    <p id="result"></p>
+
+    <script>
+      function checkISBN() {
+        let isbn = document.getElementById("isbn").value;
+        let result = document.getElementById("result");
+
+        if (!/^[0-9]{13}$/.test(isbn)) {
+          result.textContent = "ISBN harus terdiri dari 13 digit angka.";
+          result.style.color = "red";
+          return;
+        }
+
+        let sum = 0;
+        for (let i = 0; i < 12; i++) {
+          sum += (i % 2 === 0 ? 1 : 3) * parseInt(isbn[i]);
+        }
+        let checkDigit = (10 - (sum % 10)) % 10;
+
+        if (checkDigit === parseInt(isbn[12])) {
+          result.textContent = "ISBN valid!";
+          result.style.color = "green";
+        } else {
+          result.textContent = "ISBN tidak valid.";
+          result.style.color = "red";
+        }
+      }
+    </script>
+
+    <footer>
+      <p>&copy; 2025 ISBN Checker. Semua Hak Cipta Dilindungi.</p>
+    </footer>
+  </body>
+</html>
